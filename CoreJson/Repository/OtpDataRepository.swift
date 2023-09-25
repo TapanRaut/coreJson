@@ -14,12 +14,14 @@ protocol OtpRepository: BaseRepository{
 struct OtpDataRepository: OtpRepository{
     
     typealias T = Otp
+    typealias P = CDOtp
     
-    func create(record: Otp) {
+    func create(record: Otp) -> CDOtp? {
         let cdOtp = CDOtp(context: PersistentStorage.shared.context)
         cdOtp.otp = record.otp
         
         PersistentStorage.shared.saveContext()
+        return cdOtp
     }
     
     func getAll() -> [Otp]? {
@@ -47,17 +49,14 @@ struct OtpDataRepository: OtpRepository{
     }
     
     func update(record: Otp) -> Bool {
-        var otp = getAllCDOtp()
-        guard otp != nil else {return false}
-
-        let cdOtp = CDOtp(context: PersistentStorage.shared.context)
-        if cdOtp.otp != record.otp{
-            cdOtp.otp = record.otp
+        var otpData = getAllCDOtp()
+        guard otpData != nil else {return false}
+        
+        if otpData!.otp != record.otp{
+            otpData!.otp = record.otp
         }
-
-        if PersistentStorage.shared.context.hasChanges{
             PersistentStorage.shared.saveContext()
-        }
+
         return true
     }
     

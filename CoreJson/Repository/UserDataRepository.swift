@@ -12,10 +12,12 @@ protocol UserRepository: BaseRepository{
     
 }
 struct UserDataRepository: UserRepository{
+   
     
     typealias T = User
+    typealias P = CDUser
     
-    func create(record: User) {
+    func create(record: User) -> CDUser? {
         let cdUser = CDUser(context: PersistentStorage.shared.context)
         cdUser.id = Int16(record.id ?? 0)
         cdUser.name = record.name
@@ -32,52 +34,34 @@ struct UserDataRepository: UserRepository{
         
         if(record.otp != nil)
         {
-            let cdOtp = CDOtp(context: PersistentStorage.shared.context)
-            cdOtp.otp = record.otp?.otp
+            let _cdOtpDataRepository : OtpDataRepository = OtpDataRepository()
             
-            cdUser.toOtp = cdOtp
+            cdUser.toOtp =  _cdOtpDataRepository.create(record: record.otp!)
+
         }
         if(record.clientCity != nil)
         {
-            let cdClientCity = CDClientCity(context: PersistentStorage.shared.context)
-            cdClientCity.id = Int16(record.id ?? 0)
-            cdClientCity.nameAr = record.clientCity?.nameAr
-            cdClientCity.nameEn = record.clientCity?.nameEn
-            cdClientCity.name = record.clientCity?.name
-            cdClientCity.status = Int16(record.clientCity?.status ?? 0)
-            cdClientCity.statusLabel = record.clientCity?.statusLabel
             
-            cdUser.toClientCity = cdClientCity
+            let _cdClientCityRepository : ClientCityDataRepository = ClientCityDataRepository()
+            
+            cdUser.toClientCity = _cdClientCityRepository.create(record: record.clientCity!)
+ 
         }
         
         
         if(record.clientLocations != nil && record.clientLocations?.count != 0)
         {
+            
+            let _cdClientLocationRepository : ClientLocationDataRepository = ClientLocationDataRepository()
             var clientLocationsSet = Set<CDClientLocation>()
             record.clientLocations?.forEach({ (clientLocation) in
-
-                let cdClientLocation = CDClientLocation(context: PersistentStorage.shared.context)
-                cdClientLocation.id = Int16(clientLocation.id ?? 0)
-                cdClientLocation.clientID = Int16(clientLocation.clientID ?? 0)
-                cdClientLocation.latitude = clientLocation.latitude
-                cdClientLocation.longitude = clientLocation.longitude
-                cdClientLocation.address = clientLocation.address
-                cdClientLocation.addressAr = clientLocation.addressAr
-                cdClientLocation.buildingName = clientLocation.buildingName
-                cdClientLocation.locationType = Int16(clientLocation.locationType ?? 0)
-                cdClientLocation.locationTypeLabel = clientLocation.locationTypeLabel
-                cdClientLocation.apartmentName = clientLocation.apartmentName
-                cdClientLocation.requirePermission = clientLocation.requirePermission ?? false
-                cdClientLocation.city = clientLocation.city
-                cdClientLocation.zipCode = clientLocation.zipCode
-
-                clientLocationsSet.insert(cdClientLocation)
+                
+                clientLocationsSet.insert(_cdClientLocationRepository.create(record: clientLocation)!)
             })
-
             cdUser.toClientLocation = clientLocationsSet
         }
         PersistentStorage.shared.saveContext()
-       
+        return cdUser
     }
     
     func getAll() -> [User]? {
@@ -160,118 +144,39 @@ struct UserDataRepository: UserRepository{
         
         if(record.otp != nil)
         {
-            let cdOtp = CDOtp(context: PersistentStorage.shared.context)
-            if cdOtp.otp != record.otp?.otp{
-                cdOtp.otp = record.otp?.otp
-                print("otp updated")
-            }
+            let _cdOtpDataRepository : OtpDataRepository = OtpDataRepository()
             
-            cdUser?.toOtp = cdOtp
+            _cdOtpDataRepository.update(record: record.otp!)
         }
         
         
         
         if(record.clientCity != nil)
         {
-            cdUser?.toClientCity
-            let cdClientCity = CDClientCity(context: PersistentStorage.shared.context)
-            if cdClientCity.id != Int16(record.id ?? 0){
-                cdClientCity.id = Int16(record.id ?? 0)
-                print("user ClientCity id updated")
-            }
-            if cdClientCity.nameAr != record.clientCity?.nameAr{
-                cdClientCity.nameAr = record.clientCity?.nameAr
-                print("user ClientCity nameAr updated")
-            }
-            if cdClientCity.nameEn != record.clientCity?.nameEn{
-                cdClientCity.nameEn = record.clientCity?.nameEn
-                print("user ClientCity nameEn updated")
-            }
-            if cdClientCity.name != record.clientCity?.name{
-                cdClientCity.name = record.clientCity?.name
-                print("user ClientCity name updated")
-            }
-            if cdClientCity.status != Int16(record.clientCity?.status ?? 0){
-                cdClientCity.status = Int16(record.clientCity?.status ?? 0)
-                print("user ClientCity status updated")
-            }
-            if cdClientCity.statusLabel != record.clientCity?.statusLabel{
-                cdClientCity.statusLabel = record.clientCity?.statusLabel
-                print("user ClientCity statusLabel updated")
-            }
+            let _cdClientCityRepository : ClientCityDataRepository = ClientCityDataRepository()
             
-            cdUser?.toClientCity = cdClientCity
+            _cdClientCityRepository.update(record: record.clientCity!)
+            
+           
         }
         
         
         if(record.clientLocations != nil && record.clientLocations?.count != 0)
         {
+            
+                let _cdClientLocationRepository : ClientLocationDataRepository = ClientLocationDataRepository()
             var clientLocationsSet = Set<CDClientLocation>()
             record.clientLocations?.forEach({ (clientLocation) in
                 
-                let cdClientLocation = CDClientLocation(context: PersistentStorage.shared.context)
-                if cdClientLocation.id != Int16(clientLocation.id ?? 0){
-                    cdClientLocation.id = Int16(clientLocation.id ?? 0)
-                    print("user ClientLocation id updated")
-                }
-                if cdClientLocation.clientID != Int16(clientLocation.clientID ?? 0){
-                    cdClientLocation.clientID = Int16(clientLocation.clientID ?? 0)
-                    print("user ClientLocation clientID updated")
-                }
-                if cdClientLocation.latitude != clientLocation.latitude{
-                    cdClientLocation.latitude = clientLocation.latitude
-                    print("user ClientLocation latitude updated")
-                }
-                if cdClientLocation.longitude != clientLocation.longitude{
-                    cdClientLocation.longitude = clientLocation.longitude
-                    print("user ClientLocation longitude updated")
-                }
-                if cdClientLocation.address != clientLocation.address{
-                    cdClientLocation.address = clientLocation.address
-                    print("user ClientLocation address updated")
-                }
-                if cdClientLocation.addressAr != clientLocation.addressAr{
-                    cdClientLocation.addressAr = clientLocation.addressAr
-                    print("user ClientLocation addressAr updated")
-                }
-                if cdClientLocation.buildingName != clientLocation.buildingName{
-                    cdClientLocation.buildingName = clientLocation.buildingName
-                    print("user ClientLocation buildingName updated")
-                }
-                if cdClientLocation.locationType != Int16(clientLocation.locationType ?? 0){
-                    cdClientLocation.locationType = Int16(clientLocation.locationType ?? 0)
-                    print("user ClientLocation locationType updated")
-                }
-                if cdClientLocation.locationTypeLabel != clientLocation.locationTypeLabel{
-                    cdClientLocation.locationTypeLabel = clientLocation.locationTypeLabel
-                    print("user ClientLocation locationTypeLabel updated")
-                }
-                if cdClientLocation.apartmentName != clientLocation.apartmentName{
-                    cdClientLocation.apartmentName = clientLocation.apartmentName
-                    print("user ClientLocation apartmentName updated")
-                }
+                _cdClientLocationRepository.update(record: clientLocation)
                 
-                if cdClientLocation.requirePermission != clientLocation.requirePermission ?? false{
-                    cdClientLocation.requirePermission = clientLocation.requirePermission ?? false
-                    print("user ClientLocation requirePermission updated")
-                }
-                if cdClientLocation.city != clientLocation.city{
-                    cdClientLocation.city = clientLocation.city
-                    print("user ClientLocation city updated")
-                }
-                if cdClientLocation.zipCode != clientLocation.zipCode{
-                    cdClientLocation.zipCode = clientLocation.zipCode
-                    print("user ClientLocation zipCode updated")
-                }
-                
-                clientLocationsSet.insert(cdClientLocation)
+//                clientLocationsSet.insert(cdClientLocation)
             })
-            
-            cdUser?.toClientLocation = clientLocationsSet
+//
+//            cdUser?.toClientLocation = clientLocationsSet
         }
-        if PersistentStorage.shared.context.hasChanges{
             PersistentStorage.shared.saveContext()
-        }
+        
             
             return true
         }

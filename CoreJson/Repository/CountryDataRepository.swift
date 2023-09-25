@@ -13,7 +13,10 @@ protocol CountryRepository: BaseRepository{
 }
 struct CountryDataRepository: CountryRepository{
     
-    func create(record: Country) {
+    typealias T = Country
+    typealias P = CDCountry
+    
+    func create(record: Country) -> CDCountry? {
         let cdCountry = CDCountry(context: PersistentStorage.shared.context)
         cdCountry.name = record.name
         cdCountry.avatar = record.avatar
@@ -24,6 +27,7 @@ struct CountryDataRepository: CountryRepository{
         
 
         PersistentStorage.shared.saveContext()
+        return cdCountry
     }
     
     func getAll() -> [Country]? {
@@ -51,36 +55,34 @@ struct CountryDataRepository: CountryRepository{
     }
     
     func update(record: Country) -> Bool {
-        let country = getAllCDCountry()
-        guard country != nil else {return false}
+        let cdCountry = getAllCDCountry()
+        guard cdCountry != nil else {return false}
 
-        let cdCountry = CDCountry(context: PersistentStorage.shared.context)
         
-        if cdCountry.name != record.name{
-            cdCountry.name = record.name
+        if cdCountry!.name != record.name{
+            cdCountry!.name = record.name
         }
-        if cdCountry.avatar != record.avatar{
-            cdCountry.avatar = record.avatar
-        }
-        
-        if cdCountry.statusLabel != record.statusLabel{
-            cdCountry.statusLabel = record.statusLabel
-        }
-        if cdCountry.status != Int16(record.status ?? 0){
-            cdCountry.status = Int16(record.status ?? 0)
+        if cdCountry!.avatar != record.avatar{
+            cdCountry!.avatar = record.avatar
         }
         
-        if cdCountry.codeCountry != record.codeCountry{
-            cdCountry.codeCountry = record.codeCountry
+        if cdCountry!.statusLabel != record.statusLabel{
+            cdCountry!.statusLabel = record.statusLabel
+        }
+        if cdCountry!.status != Int16(record.status ?? 0){
+            cdCountry!.status = Int16(record.status ?? 0)
+        }
+        
+        if cdCountry!.codeCountry != record.codeCountry{
+            cdCountry!.codeCountry = record.codeCountry
         }
 
-        if PersistentStorage.shared.context.hasChanges{
             PersistentStorage.shared.saveContext()
-        }
+        
         return true
     }
 //    
-//    typealias T = Country
+//
 //    
 //    func delete(byIdentifier id: UUID) -> Bool {
 //        let vehicle = getCdVehicle(byId: id)

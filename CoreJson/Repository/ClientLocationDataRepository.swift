@@ -14,8 +14,9 @@ protocol ClientLocationRepository: BaseRepository{
 struct ClientLocationDataRepository: ClientLocationRepository{
     
     typealias T = ClientLocation
+    typealias P = CDClientLocation
     
-    func create(record: ClientLocation) {
+    func create(record: ClientLocation) -> CDClientLocation?{
         let cdClientLocation = CDClientLocation(context: PersistentStorage.shared.context)
         cdClientLocation.id = Int16(record.id ?? 0)
         cdClientLocation.clientID = Int16(record.clientID ?? 0)
@@ -33,6 +34,7 @@ struct ClientLocationDataRepository: ClientLocationRepository{
         
 
         PersistentStorage.shared.saveContext()
+        return cdClientLocation
     }
     
     func getAll() -> [ClientLocation]? {
@@ -60,53 +62,50 @@ struct ClientLocationDataRepository: ClientLocationRepository{
 //    }
   
     func update(record: ClientLocation) -> Bool {
-        let clientLocation = getAllCDClientLocation()
-        guard clientLocation != nil else {return false}
+        let cdClientLocation = getAllCDClientLocation()
+        guard cdClientLocation != nil else {return false}
 
-        let cdClientLocation = CDClientLocation(context: PersistentStorage.shared.context)
-        if cdClientLocation.id != Int16(record.id ?? 0){
-            cdClientLocation.id = Int16(record.id ?? 0)
+        if cdClientLocation!.id != Int16(record.id ?? 0){
+            cdClientLocation!.id = Int16(record.id ?? 0)
         }
-        if cdClientLocation.clientID != Int16(record.clientID ?? 0){
-            cdClientLocation.clientID = Int16(record.clientID ?? 0)
+        if cdClientLocation!.clientID != Int16(record.clientID ?? 0){
+            cdClientLocation!.clientID = Int16(record.clientID ?? 0)
         }
-        if cdClientLocation.latitude != record.latitude{
-            cdClientLocation.latitude = record.latitude
+        if cdClientLocation!.latitude != record.latitude{
+            cdClientLocation!.latitude = record.latitude
         }
-        if cdClientLocation.longitude != record.longitude{
-            cdClientLocation.longitude = record.longitude
+        if cdClientLocation!.longitude != record.longitude{
+            cdClientLocation!.longitude = record.longitude
         }
-        if cdClientLocation.address != record.address{
-            cdClientLocation.address = record.address
+        if cdClientLocation!.address != record.address{
+            cdClientLocation!.address = record.address
         }
-        if cdClientLocation.addressAr != record.addressAr{
+        if cdClientLocation!.addressAr != record.addressAr{
             
         }
-        if cdClientLocation.buildingName != record.buildingName{
-            cdClientLocation.buildingName = record.buildingName
+        if cdClientLocation!.buildingName != record.buildingName{
+            cdClientLocation!.buildingName = record.buildingName
         }
-        if cdClientLocation.locationType != Int16(record.locationType ?? 0){
-            cdClientLocation.locationType = Int16(record.locationType ?? 0)
+        if cdClientLocation!.locationType != Int16(record.locationType ?? 0){
+            cdClientLocation!.locationType = Int16(record.locationType ?? 0)
         }
-        if cdClientLocation.locationTypeLabel != record.locationTypeLabel{
-            cdClientLocation.locationTypeLabel = record.locationTypeLabel
+        if cdClientLocation!.locationTypeLabel != record.locationTypeLabel{
+            cdClientLocation!.locationTypeLabel = record.locationTypeLabel
         }
-        if cdClientLocation.apartmentName != record.apartmentName{
-            cdClientLocation.apartmentName = record.apartmentName
+        if cdClientLocation!.apartmentName != record.apartmentName{
+            cdClientLocation!.apartmentName = record.apartmentName
         }
-        if cdClientLocation.requirePermission != record.requirePermission ?? false{
-            cdClientLocation.requirePermission = record.requirePermission ?? false
+        if cdClientLocation!.requirePermission != record.requirePermission ?? false{
+            cdClientLocation!.requirePermission = record.requirePermission ?? false
         }
-        if cdClientLocation.city != record.city{
-            cdClientLocation.city = record.city
+        if cdClientLocation!.city != record.city{
+            cdClientLocation!.city = record.city
         }
-        if cdClientLocation.zipCode != record.zipCode{
-            cdClientLocation.zipCode = record.zipCode
+        if cdClientLocation!.zipCode != record.zipCode{
+            cdClientLocation!.zipCode = record.zipCode
         }
 
-        if PersistentStorage.shared.context.hasChanges{
             PersistentStorage.shared.saveContext()
-        }
         return true
     }
 //    

@@ -12,11 +12,12 @@ protocol ClientCityRepository: BaseRepository{
     
 }
 struct ClientCityDataRepository: ClientCityRepository{
-    
+   
     typealias T = ClientCity
+    typealias P = CDClientCity
 
     
-    func create(record: ClientCity) {
+    func create(record: ClientCity)-> CDClientCity?  {
         let cdClientCity = CDClientCity(context: PersistentStorage.shared.context)
         cdClientCity.id = Int16(record.id ?? 0)
         cdClientCity.nameAr = record.nameAr
@@ -27,17 +28,22 @@ struct ClientCityDataRepository: ClientCityRepository{
         
         if(record.country != nil)
         {
-            let cdcountry = CDCountry(context: PersistentStorage.shared.context)
-            cdcountry.name = record.country?.name
-            cdcountry.avatar = record.country?.avatar
-            cdcountry.statusLabel = record.country?.statusLabel
-            cdcountry.status = Int16(record.country?.status ?? 0)
-            cdcountry.codeCountry = record.country?.codeCountry
-            cdClientCity.toCountry = cdcountry
+            let _cdCountryDataRepository : CountryDataRepository = CountryDataRepository()
+            
+            cdClientCity.toCountry = _cdCountryDataRepository.create(record: record.country!)
+            
+//            let cdcountry = CDCountry(context: PersistentStorage.shared.context)
+//            cdcountry.name = record.country?.name
+//            cdcountry.avatar = record.country?.avatar
+//            cdcountry.statusLabel = record.country?.statusLabel
+//            cdcountry.status = Int16(record.country?.status ?? 0)
+//            cdcountry.codeCountry = record.country?.codeCountry
+//            cdClientCity.toCountry = cdcountry
         }
       
-
+        
         PersistentStorage.shared.saveContext()
+        return cdClientCity
     }
     
     func getAll() -> [ClientCity]? {
@@ -65,53 +71,37 @@ struct ClientCityDataRepository: ClientCityRepository{
     }
 
     func update(record: ClientCity) -> Bool {
-        let ClientCity = getAllClientCity()
-        guard ClientCity != nil else {return false}
+        let cdClientCity = getAllClientCity()
+        guard cdClientCity != nil else {return false}
 
-        let cdClientCity = CDClientCity(context: PersistentStorage.shared.context)
-        if cdClientCity.id != Int16(record.id ?? 0){
-            cdClientCity.id = Int16(record.id ?? 0)
+        if cdClientCity!.id != Int16(record.id ?? 0){
+            cdClientCity!.id = Int16(record.id ?? 0)
         }
-        if cdClientCity.nameAr != record.nameAr{
-            cdClientCity.nameAr = record.nameAr
+        if cdClientCity!.nameAr != record.nameAr{
+            cdClientCity!.nameAr = record.nameAr
         }
-        if cdClientCity.nameEn != record.nameEn{
-            cdClientCity.nameEn = record.nameEn
+        if cdClientCity!.nameEn != record.nameEn{
+            cdClientCity!.nameEn = record.nameEn
         }
-        if cdClientCity.name != record.name{
-            cdClientCity.name = record.name
+        if cdClientCity!.name != record.name{
+            cdClientCity!.name = record.name
         }
-        if cdClientCity.status != Int16(record.status ?? 0){
-            cdClientCity.status = Int16(record.status ?? 0)
+        if cdClientCity!.status != Int16(record.status ?? 0){
+            cdClientCity!.status = Int16(record.status ?? 0)
         }
-        if cdClientCity.statusLabel != record.statusLabel{
-            cdClientCity.statusLabel = record.statusLabel
+        if cdClientCity!.statusLabel != record.statusLabel{
+            cdClientCity!.statusLabel = record.statusLabel
         }
         
         if(record.country != nil)
         {
-            let cdcountry = CDCountry(context: PersistentStorage.shared.context)
-            if cdcountry.name != record.country?.name{
-                cdcountry.name = record.country?.name
-            }
-            if cdcountry.avatar != record.country?.avatar{
-                cdcountry.avatar = record.country?.avatar
-            }
-            if cdcountry.statusLabel != record.country?.statusLabel{
-                cdcountry.statusLabel = record.country?.statusLabel
-            }
-            if cdcountry.status != Int16(record.country?.status ?? 0){
-                cdcountry.status = Int16(record.country?.status ?? 0)
-            }
-            if cdcountry.codeCountry != record.country?.codeCountry{
-                cdcountry.codeCountry = record.country?.codeCountry
-            }
-            cdClientCity.toCountry = cdcountry
+            let _cdCountryDataRepository : CountryDataRepository = CountryDataRepository()
+            
+            _cdCountryDataRepository.update(record: record.country!)
         }
       
-        if PersistentStorage.shared.context.hasChanges{
             PersistentStorage.shared.saveContext()
-        }
+      
         
         return true
     }

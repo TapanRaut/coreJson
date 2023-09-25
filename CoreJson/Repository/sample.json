@@ -5,7 +5,7 @@
     
     {
         "user": {
-            "id": 2,
+            "id": 12,
             "name": "Client",
             "client_id": 1,
             "email": "client@clickapps.co",
@@ -18,17 +18,17 @@
             "sms_notification": true,
             "is_mobile_verified": false,
             "otp": {
-                "otp": "8704"
+                "otp": "13"
             },
             "client_city": {
-                "id": 1,
+                "id": 140,
                 "name_ar": "الرياض",
                 "name_en": "Riadh",
                 "name": "Riadh",
                 "status": 1,
                 "status_label": "Active",
                 "country": {
-                    "id": 2,
+                    "id": 15,
                     "name": "Kingdub saudi Arab",
                     "code_country": "ksa",
                     "avatar": "http://localhost:3000/default_image.png",
@@ -39,6 +39,22 @@
             "client_locations": [
                 {
                     "id": 1,
+                    "client_id": 1,
+                    "latitude": "10.0",
+                    "longitude": "20.0",
+                    "address": "169 Rath Rapids",
+                    "address_ar": "964 Michale Parkway",
+                    "address_en": "169 Rath Rapids",
+                    "building_name": "building_name",
+                    "location_type": 1,
+                    "location_type_label": "Home",
+                    "apartment_name": "apartment_name",
+                    "require_permission": false,
+                    "city": "city",
+                    "zip_code": "zip_code"
+                },
+                {
+                    "id": 2,
                     "client_id": 1,
                     "latitude": "0.0",
                     "longitude": "0.0",
