@@ -1,4 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDClientCity" representedClassName="CDClientCity" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="nameAr" optional="YES" attributeType="String"/>
+        <attribute name="nameEn" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="statusLabel" optional="YES" attributeType="String"/>
+        <relationship name="toCountry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDCountry" inverseName="toClientCity" inverseEntity="CDCountry"/>
+        <relationship name="toUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="toClientCity" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDClientLocation" representedClassName="CDClientLocation" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String"/>
+        <attribute name="addressAr" optional="YES" attributeType="String"/>
+        <attribute name="addressEn" optional="YES" attributeType="String"/>
+        <attribute name="apartmentName" optional="YES" attributeType="String"/>
+        <attribute name="buildingName" optional="YES" attributeType="String"/>
+        <attribute name="city" optional="YES" attributeType="String"/>
+        <attribute name="clientID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String"/>
+        <attribute name="locationType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="locationTypeLabel" optional="YES" attributeType="String"/>
+        <attribute name="longitude" optional="YES" attributeType="String"/>
+        <attribute name="requirePermission" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="zipCode" optional="YES" attributeType="String"/>
+        <relationship name="toUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="toClientLocation" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDCountry" representedClassName="CDCountry" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String"/>
+        <attribute name="codeCountry" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="statusLabel" optional="YES" attributeType="String"/>
+        <relationship name="toClientCity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDClientCity" inverseName="toCountry" inverseEntity="CDClientCity"/>
+    </entity>
+    <entity name="CDOtp" representedClassName="CDOtp" syncable="YES">
+        <attribute name="otp" optional="YES" attributeType="String"/>
+        <relationship name="toUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDUser" inverseName="toOtp" inverseEntity="CDUser"/>
+    </entity>
+    <entity name="CDUser" representedClassName="CDUser" syncable="YES">
+        <attribute name="avatar" optional="YES" attributeType="String"/>
+        <attribute name="birthDate" optional="YES" attributeType="String"/>
+        <attribute name="clientID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="codeCountry" optional="YES" attributeType="String"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="gender" optional="YES" attributeType="String"/>
+        <attribute name="genderLabel" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isMobileVerified" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="mobile" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="smsNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="toClientCity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDClientCity" inverseName="toUser" inverseEntity="CDClientCity"/>
+        <relationship name="toClientLocation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDClientLocation" inverseName="toUser" inverseEntity="CDClientLocation"/>
+        <relationship name="toOtp" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDOtp" inverseName="toUser" inverseEntity="CDOtp"/>
+    </entity>
 </model>

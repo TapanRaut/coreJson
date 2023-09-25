@@ -6,14 +6,24 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
-
+    
+    var users : User? = nil
+    private var userViewModel = UserViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        userViewModel.getUserRecord {[weak self] userRecords in
+            DispatchQueue.main.async {
+                if(userRecords != nil){
+                    self?.users = userRecords
+                    
+                }
+            }
+        }
+        
     }
-
-
 }
-
