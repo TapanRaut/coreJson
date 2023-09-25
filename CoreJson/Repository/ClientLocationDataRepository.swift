@@ -48,11 +48,11 @@ struct ClientLocationDataRepository: ClientLocationRepository{
 
         return results
     }
-    func getAllCDClientLocation() -> CDClientLocation? {
+    func getAllCDClientLocation() -> [CDClientLocation]? {
         let records = PersistentStorage.shared.fetchManagedObject(managedObject: CDClientLocation.self)
         guard records != nil && records?.count != 0 else {return nil}
 
-        return records?.first
+        return records
     }
     
 //    func get(byIdentifier id: Int) -> ClientLocation? {
@@ -61,52 +61,65 @@ struct ClientLocationDataRepository: ClientLocationRepository{
 //        return (clientLocation?.convertToClientLocation())!
 //    }
   
-    func update(record: ClientLocation) -> Bool {
-        let cdClientLocation = getAllCDClientLocation()
-        guard cdClientLocation != nil else {return false}
+    func update(record: [ClientLocation]) -> Set<CDClientLocation> {
+        var cdClientLocationArray = getAllCDClientLocation()
+        guard cdClientLocationArray != nil  && cdClientLocationArray?.count != 0 else {return []}
 
-        if cdClientLocation!.id != Int16(record.id ?? 0){
-            cdClientLocation!.id = Int16(record.id ?? 0)
-        }
-        if cdClientLocation!.clientID != Int16(record.clientID ?? 0){
-            cdClientLocation!.clientID = Int16(record.clientID ?? 0)
-        }
-        if cdClientLocation!.latitude != record.latitude{
-            cdClientLocation!.latitude = record.latitude
-        }
-        if cdClientLocation!.longitude != record.longitude{
-            cdClientLocation!.longitude = record.longitude
-        }
-        if cdClientLocation!.address != record.address{
-            cdClientLocation!.address = record.address
-        }
-        if cdClientLocation!.addressAr != record.addressAr{
+        var cdClientLocation = [CDClientLocation]()
+        var clientLocationsSet = Set<CDClientLocation>()
+        
+//        record.forEach({ (clientLocation) in
+//
+//        })
+        
+        for i in 0...(cdClientLocationArray!.count - 1) {
             
+            if cdClientLocationArray![i].id != Int16(record[i].id ?? 0){
+                cdClientLocationArray![i].id = Int16(record[i].id ?? 0)
+            }
+            if cdClientLocationArray![i].clientID != Int16(record[i].clientID ?? 0){
+                cdClientLocationArray![i].clientID = Int16(record[i].clientID ?? 0)
+            }
+            if cdClientLocationArray![i].latitude != record[i].latitude{
+                cdClientLocationArray![i].latitude = record[i].latitude
+            }
+            if cdClientLocationArray![i].longitude != record[i].longitude{
+                cdClientLocationArray![i].longitude = record[i].longitude
+            }
+            if cdClientLocationArray![i].address != record[i].address{
+                cdClientLocationArray![i].address = record[i].address
+            }
+            if cdClientLocationArray![i].addressAr != record[i].addressAr{
+                cdClientLocationArray![i].addressAr = record[i].addressAr
+            }
+            if cdClientLocationArray![i].buildingName != record[i].buildingName{
+                cdClientLocationArray![i].buildingName = record[i].buildingName
+            }
+            if cdClientLocationArray![i].locationType != Int16(record[i].locationType ?? 0){
+                cdClientLocationArray![i].locationType = Int16(record[i].locationType ?? 0)
+            }
+            if cdClientLocationArray![i].locationTypeLabel != record[i].locationTypeLabel{
+                cdClientLocationArray![i].locationTypeLabel = record[i].locationTypeLabel
+            }
+            if cdClientLocationArray![i].apartmentName != record[i].apartmentName{
+                cdClientLocationArray![i].apartmentName = record[i].apartmentName
+            }
+            if cdClientLocationArray![i].requirePermission != record[i].requirePermission ?? false{
+                cdClientLocationArray![i].requirePermission = record[i].requirePermission ?? false
+            }
+            if cdClientLocationArray![i].city != record[i].city{
+                cdClientLocationArray![i].city = record[i].city
+            }
+            if cdClientLocationArray![i].zipCode != record[i].zipCode{
+                cdClientLocationArray![i].zipCode = record[i].zipCode
+            }
+            clientLocationsSet.insert(cdClientLocationArray![i])
         }
-        if cdClientLocation!.buildingName != record.buildingName{
-            cdClientLocation!.buildingName = record.buildingName
-        }
-        if cdClientLocation!.locationType != Int16(record.locationType ?? 0){
-            cdClientLocation!.locationType = Int16(record.locationType ?? 0)
-        }
-        if cdClientLocation!.locationTypeLabel != record.locationTypeLabel{
-            cdClientLocation!.locationTypeLabel = record.locationTypeLabel
-        }
-        if cdClientLocation!.apartmentName != record.apartmentName{
-            cdClientLocation!.apartmentName = record.apartmentName
-        }
-        if cdClientLocation!.requirePermission != record.requirePermission ?? false{
-            cdClientLocation!.requirePermission = record.requirePermission ?? false
-        }
-        if cdClientLocation!.city != record.city{
-            cdClientLocation!.city = record.city
-        }
-        if cdClientLocation!.zipCode != record.zipCode{
-            cdClientLocation!.zipCode = record.zipCode
-        }
+        
+        
 
             PersistentStorage.shared.saveContext()
-        return true
+        return clientLocationsSet
     }
 //    
 //    

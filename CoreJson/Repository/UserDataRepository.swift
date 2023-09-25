@@ -165,13 +165,14 @@ struct UserDataRepository: UserRepository{
         {
             
                 let _cdClientLocationRepository : ClientLocationDataRepository = ClientLocationDataRepository()
-            var clientLocationsSet = Set<CDClientLocation>()
-            record.clientLocations?.forEach({ (clientLocation) in
+//            var clientLocationsSet = Set<CDClientLocation>()
+            cdUser?.toClientLocation = _cdClientLocationRepository.update(record: record.clientLocations!)
+//            record.clientLocations?.forEach({ (clientLocation) in
                 
-                _cdClientLocationRepository.update(record: clientLocation)
+//                _cdClientLocationRepository.update(record: clientLocation)
                 
 //                clientLocationsSet.insert(cdClientLocation)
-            })
+//            })
 //
 //            cdUser?.toClientLocation = clientLocationsSet
         }
