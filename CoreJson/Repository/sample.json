@@ -5,23 +5,23 @@
     
     {
         "user": {
-            "id": 12,
+            "id": 1,
             "name": "Client",
-            "client_id": 1,
+            "client_id": 120,
             "email": "client@clickapps.co",
             "gender_label": "gender_label",
-            "gender": "gender",
+            "gender": "Male",
             "mobile": "0123654789",
             "code_country": "00967",
-            "birth_date": "birth_date",
+            "birth_date": "26/09/2023",
             "avatar": "http://localhost:3000/default_image.png",
             "sms_notification": true,
             "is_mobile_verified": false,
             "otp": {
-                "otp": "13"
+                "otp": "093452"
             },
             "client_city": {
-                "id": 140,
+                "id": 44,
                 "name_ar": "الرياض",
                 "name_en": "Riadh",
                 "name": "Riadh",
@@ -39,7 +39,7 @@
             "client_locations": [
                 {
                     "id": 1,
-                    "client_id": 1,
+                    "client_id": 98,
                     "latitude": "011.0",
                     "longitude": "022.0",
                     "address": "169 Rath Rapids",
@@ -48,7 +48,7 @@
                     "building_name": "building_name",
                     "location_type": 1,
                     "location_type_label": "Home",
-                    "apartment_name": "apartment_name",
+                    "apartment_name": "Gandhi Apartment",
                     "require_permission": false,
                     "city": "city",
                     "zip_code": "zip_code"
@@ -58,7 +58,7 @@
                     "client_id": 1,
                     "latitude": "033.0",
                     "longitude": "044.0",
-                    "address": "169 Rath Rapids",
+                    "address": "1690 Rath Rapids",
                     "address_ar": "964 Michale Parkway",
                     "address_en": "169 Rath Rapids",
                     "building_name": "building_name",
@@ -80,9 +80,25 @@
                     "building_name": "building_name",
                     "location_type": 1,
                     "location_type_label": "Home",
-                    "apartment_name": "apartment_name",
+                    "apartment_name": "Neheru Apartment",
                     "require_permission": false,
-                    "city": "city",
+                    "city": "New jersy",
+                    "zip_code": "zip_code"
+                },
+                {
+                    "id": 4,
+                    "client_id": 76,
+                    "latitude": "055.0",
+                    "longitude": "066.0",
+                    "address": "169 Rath Rapids",
+                    "address_ar": "964 Michale Parkway",
+                    "address_en": "169 Rath Rapids",
+                    "building_name": "building_name",
+                    "location_type": 1,
+                    "location_type_label": "Home",
+                    "apartment_name": "Neheru Apartment",
+                    "require_permission": false,
+                    "city": "Rajkot",
                     "zip_code": "zip_code"
                 }
             ]

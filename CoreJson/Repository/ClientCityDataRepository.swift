@@ -31,14 +31,6 @@ struct ClientCityDataRepository: ClientCityRepository{
             let _cdCountryDataRepository : CountryDataRepository = CountryDataRepository()
             
             cdClientCity.toCountry = _cdCountryDataRepository.create(record: record.country!)
-            
-//            let cdcountry = CDCountry(context: PersistentStorage.shared.context)
-//            cdcountry.name = record.country?.name
-//            cdcountry.avatar = record.country?.avatar
-//            cdcountry.statusLabel = record.country?.statusLabel
-//            cdcountry.status = Int16(record.country?.status ?? 0)
-//            cdcountry.codeCountry = record.country?.codeCountry
-//            cdClientCity.toCountry = cdcountry
         }
       
         
@@ -76,21 +68,27 @@ struct ClientCityDataRepository: ClientCityRepository{
 
         if cdClientCity!.id != Int16(record.id ?? 0){
             cdClientCity!.id = Int16(record.id ?? 0)
+            print("Debug: ClientCity id  updated")
         }
         if cdClientCity!.nameAr != record.nameAr{
             cdClientCity!.nameAr = record.nameAr
+            print("Debug: ClientCity nameAr updated")
         }
         if cdClientCity!.nameEn != record.nameEn{
             cdClientCity!.nameEn = record.nameEn
+            print("Debug: ClientCity nameEn updated")
         }
         if cdClientCity!.name != record.name{
             cdClientCity!.name = record.name
+            print("Debug: ClientCity name updated")
         }
         if cdClientCity!.status != Int16(record.status ?? 0){
             cdClientCity!.status = Int16(record.status ?? 0)
+            print("Debug: ClientCity status updated")
         }
         if cdClientCity!.statusLabel != record.statusLabel{
             cdClientCity!.statusLabel = record.statusLabel
+            print("Debug: ClientCity statusLabel updated")
         }
         
         if(record.country != nil)

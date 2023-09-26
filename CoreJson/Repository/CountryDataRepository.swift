@@ -61,20 +61,25 @@ struct CountryDataRepository: CountryRepository{
         
         if cdCountry!.name != record.name{
             cdCountry!.name = record.name
+            print("Debug: Country name updated")
         }
         if cdCountry!.avatar != record.avatar{
             cdCountry!.avatar = record.avatar
+            print("Debug: Country name updated")
         }
         
         if cdCountry!.statusLabel != record.statusLabel{
             cdCountry!.statusLabel = record.statusLabel
+            print("Debug: Country avatar updated")
         }
         if cdCountry!.status != Int16(record.status ?? 0){
             cdCountry!.status = Int16(record.status ?? 0)
+            print("Debug: Country status updated")
         }
         
         if cdCountry!.codeCountry != record.codeCountry{
             cdCountry!.codeCountry = record.codeCountry
+            print("Debug: Country code updated")
         }
 
             PersistentStorage.shared.saveContext()

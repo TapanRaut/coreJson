@@ -24,6 +24,7 @@ struct ClientLocationDataRepository: ClientLocationRepository{
         cdClientLocation.longitude = record.longitude
         cdClientLocation.address = record.address
         cdClientLocation.addressAr = record.addressAr
+        cdClientLocation.addressEn = record.addressEn
         cdClientLocation.buildingName = record.buildingName
         cdClientLocation.locationType = Int16(record.locationType ?? 0)
         cdClientLocation.locationTypeLabel = record.locationTypeLabel
@@ -65,55 +66,64 @@ struct ClientLocationDataRepository: ClientLocationRepository{
         var cdClientLocationArray = getAllCDClientLocation()
         guard cdClientLocationArray != nil  && cdClientLocationArray?.count != 0 else {return []}
 
-        var cdClientLocation = [CDClientLocation]()
         var clientLocationsSet = Set<CDClientLocation>()
-        
-//        record.forEach({ (clientLocation) in
-//
-//        })
-        
+    
         for i in 0...(cdClientLocationArray!.count - 1) {
             
             if cdClientLocationArray![i].id != Int16(record[i].id ?? 0){
                 cdClientLocationArray![i].id = Int16(record[i].id ?? 0)
+                print("Debug: ClientLocation id at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].clientID != Int16(record[i].clientID ?? 0){
                 cdClientLocationArray![i].clientID = Int16(record[i].clientID ?? 0)
+                print("Debug: ClientLocation clientID at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].latitude != record[i].latitude{
                 cdClientLocationArray![i].latitude = record[i].latitude
+                print("Debug: ClientLocation latitude at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].longitude != record[i].longitude{
                 cdClientLocationArray![i].longitude = record[i].longitude
+                print("Debug: ClientLocation longitude at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].address != record[i].address{
                 cdClientLocationArray![i].address = record[i].address
+                print("Debug: ClientLocation address at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].addressAr != record[i].addressAr{
                 cdClientLocationArray![i].addressAr = record[i].addressAr
+                print("Debug: ClientLocation addressAr at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].buildingName != record[i].buildingName{
                 cdClientLocationArray![i].buildingName = record[i].buildingName
+                print("Debug: ClientLocation buildingName at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].locationType != Int16(record[i].locationType ?? 0){
                 cdClientLocationArray![i].locationType = Int16(record[i].locationType ?? 0)
+                print("Debug: ClientLocation locationType at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].locationTypeLabel != record[i].locationTypeLabel{
                 cdClientLocationArray![i].locationTypeLabel = record[i].locationTypeLabel
+                print("Debug: ClientLocation locationTypeLabel at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].apartmentName != record[i].apartmentName{
                 cdClientLocationArray![i].apartmentName = record[i].apartmentName
+                print("Debug: ClientLocation apartmentName at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].requirePermission != record[i].requirePermission ?? false{
                 cdClientLocationArray![i].requirePermission = record[i].requirePermission ?? false
+                print("Debug: ClientLocation id at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].city != record[i].city{
                 cdClientLocationArray![i].city = record[i].city
+                print("Debug: ClientLocation city at postition \(i) in the array is updated")
             }
             if cdClientLocationArray![i].zipCode != record[i].zipCode{
                 cdClientLocationArray![i].zipCode = record[i].zipCode
+                print("Debug: ClientLocation zipCode at postition \(i) in the array is updated")
             }
             clientLocationsSet.insert(cdClientLocationArray![i])
+            
         }
         
         

@@ -54,6 +54,7 @@ struct OtpDataRepository: OtpRepository{
         
         if otpData!.otp != record.otp{
             otpData!.otp = record.otp
+            print("Debug: Otp updated")
         }
             PersistentStorage.shared.saveContext()
 

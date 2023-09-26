@@ -107,39 +107,39 @@ struct UserDataRepository: UserRepository{
         
         if cdUser?.id != Int16(record.id ?? 0){
             cdUser?.id = Int16(record.id ?? 0)
-            print("user Id updated")
+            print("Debug: user Id updated")
         }
         
         if cdUser?.name != record.name{
             cdUser?.name = record.name
-            print("user name updated")
+            print("Debug: user name updated")
         }
         if (cdUser?.clientID != Int16(record.clientID ?? 0)){
             cdUser?.clientID = Int16(record.clientID ?? 0)
-            print("clientId updated")
+            print("Debug: clientId updated")
         }
         if cdUser?.genderLabel != record.genderLabel{
             cdUser?.genderLabel = record.genderLabel
-            print("genderLabel updated")
+            print("Debug: genderLabel updated")
         }
         
         if cdUser?.gender != record.gender{
             cdUser?.gender = record.gender
-            print("gender updated")
+            print("Debug: gender updated")
         }
         if cdUser?.mobile != record.mobile{
             cdUser?.mobile = record.mobile
-            print("mobile updated")
+            print("Debug: mobile updated")
         }
         
         if cdUser?.birthDate != record.birthDate{
             cdUser?.birthDate = record.birthDate
-            print("gender updated")
+            print("Debug: birthDate updated")
         }
         
         if cdUser?.avatar != record.avatar{
             cdUser?.avatar = record.avatar
-            print("avatar updated")
+            print("Debug: avatar updated")
         }
         
         if(record.otp != nil)
